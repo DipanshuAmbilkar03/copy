@@ -1,0 +1,110 @@
+Lab 4 - Linear Regression using Boston Housing Dataset
+=======================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we implement Simple and Multiple Linear Regression using the Boston Housing dataset.
+
+Linear Regression is a supervised machine learning algorithm that predicts a continuous output
+variable (house price) based on one or more input features.
+
+The goal is to find a line (or hyperplane) that best fits the data."
+
+---
+
+Step 1: Load the Dataset
+--------------------------
+"We load the Boston Housing dataset from a CSV file (or sklearn's datasets).
+Key columns include:
+  - CRIM  — crime rate per town
+  - RM    — average number of rooms per dwelling
+  - LSTAT — percentage of lower-status population
+  - MEDV  — median home value (our target/output variable)"
+
+---
+
+Step 2: Explore the Dataset
+-----------------------------
+"We use:
+  - df.head()        — preview first rows
+  - df.describe()    — summary statistics
+  - df.isnull().sum()— check for missing values"
+
+---
+
+Step 3: Simple Linear Regression
+----------------------------------
+"Simple Linear Regression uses one input to predict the output.
+
+We select RM (rooms) as input and MEDV (price) as output.
+
+The equation: y = mx + b  where:
+  - y = predicted price
+  - x = number of rooms
+  - m = slope (coefficient)
+  - b = intercept
+
+We split data:
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+Then train:
+    model = LinearRegression()
+    model.fit(X_train, y_train)"
+
+---
+
+Step 4: Evaluate the Model
+----------------------------
+"We evaluate using three metrics:
+
+1. R² Score (R-squared) — how well the model explains variance in the data.
+     R² = 1 -> perfect fit
+     R² = 0 -> model is no better than the mean
+
+2. Mean Squared Error (MSE) — average of squared differences between actual and predicted.
+     Lower is better.
+
+3. Root Mean Squared Error (RMSE) — square root of MSE, in the same unit as output.
+
+    from sklearn.metrics import mean_squared_error, r2_score"
+
+---
+
+Step 5: Plot the Regression Line
+----------------------------------
+"We plot the actual data points (scatter) and overlay the predicted regression line.
+This visually shows how well the model fits the data."
+
+---
+
+Step 6: Multiple Linear Regression
+-------------------------------------
+"Multiple Linear Regression uses all features (CRIM, RM, LSTAT, etc.) to predict the output.
+
+Multiple regression is more powerful — it captures relationships between all features and the target.
+
+We again train, predict, and evaluate using R² and RMSE."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept               | What it does                            |
+|-----------------------|-----------------------------------------|
+| Linear Regression     | Predict continuous output               |
+| Simple LR             | One input feature                       |
+| Multiple LR           | All input features                      |
+| train_test_split      | Split data into train and test sets     |
+| R² Score              | Model accuracy (0 to 1)                 |
+| MSE / RMSE            | Error measurement                       |
+| coef_ / intercept_    | Slope and bias of the regression line   |
+
+---
+
+Conclusion
+----------
+"This experiment demonstrated how to build and evaluate a Linear Regression model.
+We learned that simple regression uses one feature while multiple regression uses all features.
+The R² score tells us how much of the variance in the output our model captures."

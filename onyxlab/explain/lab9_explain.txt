@@ -1,0 +1,114 @@
+Lab 9 - Data Visualization II (Titanic - Box Plot: Age vs Gender vs Survival)
+===============================================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we explore Data Visualization II using the Titanic dataset.
+The objective is to create a box plot showing the age distribution by gender
+and survival outcome."
+
+---
+
+Step 1: Loading and Cleaning the Dataset
+------------------------------------------
+"We load the Titanic dataset and keep only the relevant columns:
+  - sex       : Gender (male / female)
+  - age       : Age of the passenger
+  - survived  : Survival status (0 = No, 1 = Yes)
+
+We also drop rows with missing age values, since we need age for plotting.
+
+Code:
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    sns.set(style='whitegrid', context='notebook')
+
+    titanic = sns.load_dataset('titanic')
+    df = titanic[['sex', 'age', 'survived']].dropna()
+    df['survived'] = df['survived'].map({0: 'No', 1: 'Yes'})
+
+    print('Shape after cleaning:', df.shape)
+
+After cleaning: 714 rows remain."
+
+---
+
+Step 2: Creating the Box Plot
+-------------------------------
+"We create a grouped box plot to compare:
+  - X-axis: Gender (male / female)
+  - Y-axis: Age
+  - Hue:    Survival status (Yes / No)
+
+Code:
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(data=df, x='sex', y='age', hue='survived', palette='Set2')
+    plt.title('Age Distribution by Sex and Survival (Titanic)')
+    plt.xlabel('Sex')
+    plt.ylabel('Age')
+    plt.legend(title='Survived')
+    plt.tight_layout()
+    plt.show()
+
+How to read a Box Plot:
+  - The box shows the Interquartile Range (IQR): Q1 to Q3 (middle 50% of data).
+  - The line inside the box shows the Median (Q2).
+  - Whiskers extend to Q1 - 1.5 * IQR and Q3 + 1.5 * IQR.
+  - Points outside the whiskers are outliers."
+
+---
+
+Step 3: Summary Statistics Table
+----------------------------------
+"We also compute a grouped summary table:
+
+    summary = df.groupby(['sex', 'survived'])['age'].describe().round(2)
+
+This gives us count, mean, std, min, 25%, 50%, 75%, and max for each group."
+
+---
+
+Observations / Inferences
+--------------------------
+"From the box plot, we can observe:
+
+1. Survivors tend to have slightly lower median ages in multiple groups.
+2. Male non-survivors show a wider age spread (larger IQR).
+3. Outliers appear in each group, indicating unusually high or low ages.
+4. Both sex and age influenced survival outcomes in Titanic.
+5. Female survivors are slightly older than female non-survivors.
+
+Key takeaway: Females had a higher survival rate, and younger passengers
+(especially females) had a better chance of surviving."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept              | What it does                                        |
+|----------------------|-----------------------------------------------------|
+| sns.boxplot()        | Creates a box plot to show age distribution        |
+| hue                  | Groups boxes by a 3rd variable (survived)          |
+| dropna()             | Removes rows with missing values                   |
+| groupby().describe() | Computes summary statistics per group              |
+| palette='Set2'       | Uses a color palette for visual clarity            |
+
+---
+
+Conclusion
+----------
+"This experiment showed us how to use box plots to analyze the distribution
+of a continuous variable (age) across multiple categorical variables
+(sex and survival).
+
+Box plots are powerful because they summarize:
+  - Center (median)
+  - Spread (IQR)
+  - Skewness
+  - Outliers
+
+This helps us quickly compare distributions across groups."

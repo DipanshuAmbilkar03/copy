@@ -1,0 +1,96 @@
+Lab 1 - Data Preprocessing using the Iris Dataset
+====================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we performed data preprocessing on the famous Iris dataset.
+The Iris dataset is a classic open-source dataset available on Kaggle and UCI Machine Learning Repository.
+It contains 150 records of iris flowers with 4 numeric features — sepal length, sepal width,
+petal length, and petal width — and 1 categorical column — the species name."
+
+---
+
+Step 1: Import Libraries
+--------------------------
+"We start by importing the required Python libraries:
+  - pandas       — for loading and manipulating the dataset
+  - numpy        — for numerical operations
+  - sklearn.preprocessing — for label encoding (converting text labels to numbers)"
+
+---
+
+Step 2: Load the Dataset
+--------------------------
+"We load the Iris CSV file into a pandas DataFrame.
+A DataFrame is basically a table in Python — rows are records, columns are features."
+
+---
+
+Step 3: Data Preprocessing
+----------------------------
+
+3a. Check for Missing Values — isnull()
+"We use df.isnull().sum() to check if any column has missing values.
+Missing values can cause errors in machine learning models, so we need to identify them first.
+In the Iris dataset, there are no missing values, so we're good to go."
+
+3b. Descriptive Statistics — describe()
+"We use df.describe() to get initial statistics like:
+  - count  — how many entries
+  - mean   — average value
+  - std    — standard deviation (spread of data)
+  - min / max — smallest and largest values
+  - 25%, 50%, 75% — quartiles
+
+This gives us a quick snapshot of the data."
+
+3c. Check Dimensions
+"We use df.shape to see how many rows and columns the dataset has.
+For Iris, it's 150 rows and 5 columns (4 features + 1 label)."
+
+---
+
+Step 4: Data Types and Formatting
+------------------------------------
+"We use df.dtypes to check the data type of each column:
+  - Sepal/Petal columns  -> float64 (numeric)
+  - Species              -> object (text/categorical)
+
+If any numeric column was stored as text, we would convert it using astype(float)."
+
+---
+
+Step 5: Convert Categorical Variable to Numeric
+-------------------------------------------------
+"Machine learning models only understand numbers.
+So we convert the Species column (which has values like 'Iris-setosa') into numbers
+using LabelEncoder.
+
+LabelEncoder maps:
+  - Iris-setosa     -> 0
+  - Iris-versicolor -> 1
+  - Iris-virginica  -> 2
+
+This is called encoding categorical variables."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept      | What it does                         |
+|--------------|--------------------------------------|
+| isnull()     | Detects missing values               |
+| describe()   | Summary statistics                   |
+| shape        | Dimensions of the dataframe          |
+| dtypes       | Data type of each column             |
+| LabelEncoder | Converts text labels to numbers      |
+| DataFrame    | Pandas table structure               |
+
+---
+
+Conclusion
+----------
+"This experiment covered the fundamental steps of data preprocessing —
+loading, exploring, and cleaning data before feeding it into a machine learning model."

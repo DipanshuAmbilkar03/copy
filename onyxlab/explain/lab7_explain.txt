@@ -1,0 +1,150 @@
+Lab 7 - Text Analytics (NLP: Tokenization, POS, TF-IDF)
+=========================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we explore Text Analytics — the process of extracting useful information
+from raw text data.
+
+We perform the following NLP (Natural Language Processing) operations:
+  1. Tokenization        — splitting text into words/sentences
+  2. POS Tagging         — labeling parts of speech
+  3. Stop Words Removal  — removing common, meaningless words
+  4. Stemming            — reducing words to their root form
+  5. Lemmatization       — reducing words to their base dictionary form
+  6. TF-IDF              — measuring the importance of a word in a document"
+
+---
+
+Step 1: Tokenization
+----------------------
+"Tokenization is the process of splitting text into individual units called tokens.
+
+We use Python's built-in re module (Regular Expressions):
+
+    import re
+    tokens = re.findall(r'\b[a-zA-Z]+\b', text.lower())
+
+We use re.findall to extract only alphabetic words, ignoring punctuation and numbers.
+
+There are two types:
+  - Word Tokenization     — split into individual words
+  - Sentence Tokenization — split into sentences (using .split('.'))"
+
+---
+
+Step 2: Stop Words Removal
+----------------------------
+"Stop words are common words that carry little meaning:
+  - e.g., 'the', 'is', 'in', 'and', 'to'
+
+We define a set of common English stop words and filter them out:
+
+    stop_words = {'the', 'is', 'in', 'and', ...}
+    filtered   = [w for w in tokens if w not in stop_words]
+
+Removing stop words helps us focus on the meaningful, content-bearing words."
+
+---
+
+Step 3: POS Tagging
+---------------------
+"Part-of-Speech (POS) Tagging labels each word with its grammatical role:
+  - NN — Noun
+  - VB — Verb
+  - JJ — Adjective
+  - RB — Adverb
+  - DT — Determiner
+
+We implement a rule-based approach using word endings:
+  - Words ending in -ing      -> likely a Verb
+  - Words ending in -ly       -> likely an Adverb
+  - Words ending in -ion/-tion -> likely a Noun
+  - Otherwise                 -> default to Noun
+
+This avoids needing nltk or spacy installations."
+
+---
+
+Step 4: Stemming
+-----------------
+"Stemming cuts off word endings to get to the root:
+  - running   -> run
+  - happiness -> happi
+  - studies   -> studi
+
+We implement a simple rule-based stemmer:
+
+    if word.endswith('ing'):
+        return word[:-3]
+    elif word.endswith('es'):
+        return word[:-2]
+
+Stemming is fast but can produce non-real words like 'happi'."
+
+---
+
+Step 5: Lemmatization
+-----------------------
+"Lemmatization is smarter than stemming — it returns real dictionary words:
+  - running -> run
+  - better  -> good
+  - studies -> study
+
+We use a simple dictionary-based approach to demonstrate the concept.
+In production, nltk.WordNetLemmatizer or spacy would be used."
+
+---
+
+Step 6: TF-IDF
+----------------
+"TF-IDF (Term Frequency - Inverse Document Frequency) measures how important
+a word is in a document relative to a collection.
+
+  - TF       = how often a word appears in a document
+  - IDF      = log(total docs / docs containing the word)
+  - TF-IDF   = TF x IDF
+
+Words common across all documents (like 'the') get a low TF-IDF.
+Words unique to one document get a high TF-IDF.
+
+We use TfidfVectorizer from sklearn:
+
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(documents)
+
+The result is a TF-IDF matrix where rows are documents and columns are words."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept          | What it does                             |
+|------------------|------------------------------------------|
+| Tokenization     | Split text into words/sentences          |
+| Stop Words       | Filter out meaningless common words      |
+| POS Tagging      | Label words by grammatical role          |
+| Stemming         | Cut word endings to root                 |
+| Lemmatization    | Reduce to dictionary base form           |
+| TF               | Term frequency in a document             |
+| IDF              | Inverse document frequency               |
+| TF-IDF           | Word importance score                    |
+| re.findall       | Built-in regex tokenizer                 |
+| TfidfVectorizer  | sklearn's TF-IDF implementation          |
+
+---
+
+Conclusion
+----------
+"This experiment covered the fundamentals of Text Analytics and NLP preprocessing.
+These techniques are the building blocks of more advanced NLP applications like:
+  - Sentiment Analysis
+  - Chatbots
+  - Search Engines
+  - Document Classification
+
+The key takeaway is that raw text must be cleaned and transformed before
+any ML model can learn from it."

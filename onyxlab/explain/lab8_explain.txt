@@ -1,0 +1,104 @@
+Lab 8 - Data Visualization I (Titanic Dataset - Pattern Analysis & Histograms)
+=============================================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we explore Data Visualization I using the inbuilt Titanic dataset.
+The goal is to perform pattern analysis and visualize the fare distribution using histograms."
+
+---
+
+Step 1: Loading the Titanic Dataset
+------------------------------------
+"We load the Titanic dataset directly from seaborn's built-in datasets:
+
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    titanic = sns.load_dataset('titanic')
+
+The dataset has 891 rows and 15 columns including:
+  - survived   : Whether the passenger survived (0 = No, 1 = Yes)
+  - pclass     : Passenger class (1st, 2nd, 3rd)
+  - sex        : Gender (male / female)
+  - age        : Age of the passenger
+  - fare       : Fare paid by the passenger
+  - embarked   : Port of embarkation (S, C, Q)"
+
+---
+
+Step 2: Pattern Analysis with Subplots
+----------------------------------------
+"We create 4 visualizations to study patterns in survival:
+
+1. Survival by Sex (Count Plot)
+   - More females survived than males.
+   - Shows the 'women and children first' rescue principle.
+
+2. Survival by Passenger Class (Count Plot)
+   - 1st class passengers had the highest survival rate.
+   - 3rd class passengers had the lowest.
+
+3. Fare by Passenger Class (Box Plot)
+   - 1st class passengers paid much higher fares.
+   - There are outliers indicating very expensive fares.
+
+4. Correlation Heatmap
+   - Shows the correlation between numeric features.
+   - A higher correlation value means the features change together.
+
+Code:
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    sns.countplot(data=titanic, x='sex', hue='survived', ax=axes[0, 0])
+    axes[0, 0].set_title('Survival by Sex')
+    sns.countplot(data=titanic, x='class', hue='survived', ax=axes[0, 1])
+    axes[0, 1].set_title('Survival by Passenger Class')
+    sns.boxplot(data=titanic, x='class', y='fare', ax=axes[1, 0])
+    axes[1, 0].set_title('Fare by Class')
+    corr = titanic.select_dtypes(include='number').corr()
+    sns.heatmap(corr, cmap='Blues', ax=axes[1, 1], annot=True)
+    axes[1, 1].set_title('Correlation Heatmap')
+    plt.tight_layout()
+    plt.show()"
+
+---
+
+Step 3: Fare Distribution Histogram
+-------------------------------------
+"We plot the fare distribution to understand the spread of fares across passengers.
+
+    sns.histplot(data=titanic, x='fare', bins=30, kde=True)
+    plt.title('Fare Distribution')
+    plt.show()
+
+Observations:
+  - Most passengers paid a low fare (economy/3rd class).
+  - The fare distribution is right-skewed.
+  - A few passengers paid extremely high fares (1st class luxury cabins)."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept         | What it does                                         |
+|-----------------|------------------------------------------------------|
+| sns.countplot   | Counts occurrences of each category                  |
+| sns.boxplot     | Shows distribution + outliers for numeric data       |
+| sns.heatmap     | Visualizes correlation matrix using colors           |
+| sns.histplot    | Plots histogram of continuous data                   |
+| hue             | Adds color coding for a 3rd categorical variable     |
+| corr()          | Computes Pearson correlation between numeric columns |
+
+---
+
+Conclusion
+----------
+"This experiment demonstrated how visual analysis of the Titanic dataset can reveal:
+  - Survival patterns based on gender and class.
+  - Fare distributions across passenger classes.
+  - Correlations between numerical features.
+
+Visualizations are essential to quickly discover trends and patterns
+that would otherwise be hidden in raw data."

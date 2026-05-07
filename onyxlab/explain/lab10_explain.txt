@@ -1,0 +1,124 @@
+Lab 10 - Data Visualization III (IRIS Dataset - Histograms & Box Plots)
+=========================================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we explore Data Visualization III using the IRIS dataset.
+The goal is to scan the dataset, understand its features, and visualize
+feature behavior using histograms and box plots."
+
+---
+
+Step 1: Loading the IRIS Dataset
+-----------------------------------
+"We load the IRIS.csv file and prepare it for visualization:
+
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    sns.set(style='whitegrid', context='notebook')
+
+    df = pd.read_csv('IRIS.csv')
+
+The dataset has 150 rows and 5 columns:
+  - sepal_length  : Length of the sepal (numeric)
+  - sepal_width   : Width of the sepal (numeric)
+  - petal_length  : Length of the petal (numeric)
+  - petal_width   : Width of the petal (numeric)
+  - species       : Type of iris flower (nominal)"
+
+---
+
+Step 2: Feature Type Classification
+--------------------------------------
+"We classify features as Numeric or Nominal:
+
+    for col in df.columns:
+        if pd.api.types.is_numeric_dtype(df[col]):
+            ftype = 'Numeric'
+        else:
+            ftype = 'Nominal'
+
+Result:
+  - sepal_length   -> Numeric (float64)
+  - sepal_width    -> Numeric (float64)
+  - petal_length   -> Numeric (float64)
+  - petal_width    -> Numeric (float64)
+  - species        -> Nominal (object)"
+
+---
+
+Step 3: Histograms for Each Numeric Feature
+---------------------------------------------
+"We plot histograms (with KDE curves) for all 4 numeric features:
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+    axes = axes.flatten()
+
+    for ax, col in zip(axes, numeric_cols):
+        sns.histplot(df[col], kde=True, ax=ax, bins=20, color='teal')
+        ax.set_title(f'Histogram of {col}')
+
+    plt.tight_layout()
+    plt.show()
+
+Observations from Histograms:
+  - sepal_length : Roughly bell-shaped; most values between 5 and 7.
+  - sepal_width  : Approximately normal; centered around 3.
+  - petal_length : Bimodal distribution (two peaks); smaller setosa petal vs others.
+  - petal_width  : Bimodal distribution; clear separation between species."
+
+---
+
+Step 4: Box Plots for Each Numeric Feature by Species
+-------------------------------------------------------
+"We create box plots to compare feature distributions across the 3 iris species:
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+    axes = axes.flatten()
+
+    for ax, col in zip(axes, numeric_cols):
+        sns.boxplot(data=df, x='species', y=col, ax=ax, palette='Set2')
+        ax.set_title(f'Boxplot of {col} by Species')
+
+    plt.tight_layout()
+    plt.show()
+
+Observations from Box Plots:
+  - Iris-setosa has distinctly smaller petal length and width.
+  - Iris-virginica has the largest sepal and petal measurements.
+  - Iris-versicolor falls in between the two.
+  - Petal length and petal width are the most discriminating features."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept                     | What it does                                      |
+|-----------------------------|---------------------------------------------------|
+| pd.read_csv()               | Loads data from a CSV file                       |
+| is_numeric_dtype()          | Checks if a column holds numeric values          |
+| sns.histplot() with kde=True| Plots histogram with a smooth density curve      |
+| sns.boxplot()               | Plots box-and-whisker diagram per category       |
+| select_dtypes('number')     | Selects only numeric columns                     |
+| palette='Set2'              | Applies color palette for different categories   |
+
+---
+
+Conclusion
+----------
+"This experiment introduced us to data exploration and visualization
+on the IRIS dataset:
+
+1. We identified feature types (numeric vs nominal).
+2. Histograms helped us understand the distribution shape of each feature.
+3. Box plots helped us compare distributions across species.
+
+The IRIS dataset is a classic in machine learning — the petal measurements
+are strong predictors for separating the three iris species:
+  - Iris-setosa
+  - Iris-versicolor
+  - Iris-virginica"

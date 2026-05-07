@@ -1,0 +1,144 @@
+Lab 12 - Big Data Processing using Apache Spark (Scala - Word Count)
+=====================================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we use Apache Spark with Scala to perform Word Count —
+a classic Big Data processing task.
+
+Word Count counts how many times each word appears in a text dataset.
+This is the 'Hello World' of Big Data frameworks."
+
+---
+
+What is Apache Spark?
+-----------------------
+"Apache Spark is an open-source, distributed data processing framework.
+It is much faster than Hadoop MapReduce because it uses in-memory processing.
+
+Key features of Spark:
+  - Processes data in-memory (no disk I/O between steps)
+  - Supports Scala, Python (PySpark), Java, and R
+  - Works on Datasets, DataFrames, and RDDs (Resilient Distributed Datasets)
+  - Scales from a laptop to thousands of cluster nodes"
+
+---
+
+Step 1: Setting Up SparkSession
+---------------------------------
+"A SparkSession is the entry point to all Spark functionality.
+
+    import org.apache.spark.sql.SparkSession
+
+    object WordCountExample {
+      def main(args: Array[String]): Unit = {
+
+        val spark = SparkSession.builder()
+          .appName('Word Count Example')
+          .master('local[*]')
+          .getOrCreate()
+
+        import spark.implicits._
+
+Here:
+  - appName sets the name of the Spark application.
+  - master('local[*]') runs Spark locally using all CPU cores.
+  - getOrCreate() gets an existing session or creates a new one.
+  - spark.implicits._ enables implicit conversions (e.g., Seq to Dataset)."
+
+---
+
+Step 2: Creating the Dataset
+------------------------------
+"We define a small list of sentences as our input data:
+
+    val data = List('dipanshu kinjal', 'Onyx dipanshu', 'Pranjal kinjal')
+    val ds = spark.createDataset(data)
+
+This creates a Dataset[String] where each element is one sentence."
+
+---
+
+Step 3: Word Count Transformation
+-----------------------------------
+"We use functional transformations to count word occurrences:
+
+    val wordCount = ds
+      .flatMap(line => line.split(' '))
+      .groupBy('value')
+      .count()
+
+    wordCount.show()
+
+Explanation of each step:
+  - .flatMap(line => line.split(' '))
+      Splits each sentence into individual words.
+      'dipanshu kinjal' becomes ['dipanshu', 'kinjal'].
+      flatMap flattens all words into one flat Dataset.
+
+  - .groupBy('value')
+      Groups all occurrences of the same word together.
+
+  - .count()
+      Counts how many times each word appears.
+
+  - .show()
+      Displays the result in a formatted table."
+
+---
+
+Step 4: Output and Shutdown
+-----------------------------
+"The output of the word count:
+
+    +--------+-----+
+    |value   |count|
+    +--------+-----+
+    |kinjal  |    2|
+    |dipanshu|    2|
+    |Onyx    |    1|
+    |Pranjal |    1|
+    +--------+-----+
+
+Note: 'Onyx' and 'Pranjal' appear only once.
+      'dipanshu' and 'kinjal' each appear twice.
+      Word matching is case-sensitive (e.g., 'Onyx' != 'onyx').
+
+Finally, we stop the SparkSession:
+    spark.stop()"
+
+---
+
+Key Concepts Used
+-----------------
+| Concept               | What it does                                       |
+|-----------------------|----------------------------------------------------|
+| SparkSession          | Entry point to all Spark operations               |
+| Dataset[String]       | Strongly-typed distributed data collection        |
+| flatMap()             | Splits each item into multiple items              |
+| groupBy()             | Groups rows with the same value together          |
+| count()               | Counts the number of rows in each group           |
+| show()                | Displays the result in table format               |
+| master('local[*]')    | Runs Spark on local machine with all cores        |
+| spark.implicits._     | Enables implicit encoders for collections         |
+
+---
+
+Conclusion
+----------
+"This experiment demonstrated the core concepts of Apache Spark using Scala:
+
+1. We created a SparkSession to connect to the Spark engine.
+2. We loaded a small text dataset as a Scala Dataset.
+3. We applied transformations (flatMap, groupBy, count) to count words.
+4. Spark efficiently processes the data in parallel.
+
+Word Count is the foundational example that demonstrates:
+  - Distributed data processing
+  - Functional programming with Spark
+  - In-memory computation for performance
+
+In production, this same pattern works on petabytes of data
+distributed across hundreds of machines in a Spark cluster."

@@ -1,0 +1,113 @@
+Lab 3 - Measures of Central Tendency and Variability (Iris Dataset)
+=====================================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we study Measures of Central Tendency and Variability using the Iris dataset.
+
+Central tendency refers to the center of a dataset — mean, median, mode.
+Variability refers to how spread out the data is — standard deviation, range, etc.
+
+We also group the data by species (a categorical variable) to compare statistics across groups."
+
+---
+
+Step 1: Load the Dataset
+--------------------------
+"We load Iris.csv using pandas.
+The dataset has 4 numeric columns:
+  - SepalLengthCm, SepalWidthCm, PetalLengthCm, PetalWidthCm
+
+And 1 categorical column:
+  - Class Label (species: Iris-setosa, Iris-versicolor, Iris-virginica)"
+
+---
+
+Step 2: Overall Summary Statistics
+-------------------------------------
+"We compute summary statistics for all numeric columns across the entire dataset:
+  - Mean    — average value
+  - Median  — middle value (50th percentile)
+  - Min     — smallest value
+  - Max     — largest value
+  - Std Dev — standard deviation (spread around the mean)
+
+We use:
+    df[numeric_cols].mean()
+    df[numeric_cols].median()
+    df[numeric_cols].std()"
+
+---
+
+Step 3: Statistics Grouped by Species (Categorical Variable)
+--------------------------------------------------------------
+"We group numeric variables by species using groupby():
+
+    df.groupby('Class Label')[numeric_cols].agg(['mean', 'median', 'min', 'max', 'std'])
+
+This shows how each species differs — e.g., Iris-setosa has smaller petals than Iris-virginica.
+
+Groupby is a key pandas technique — it splits data, applies a function, and combines results."
+
+---
+
+Step 4: Create a Numeric List for Categorical Variable
+--------------------------------------------------------
+"We create a mapping from species name to a number:
+  - Iris-setosa     -> 0
+  - Iris-versicolor -> 1
+  - Iris-virginica  -> 2
+
+This numeric list represents each row's species as a number.
+This is needed when feeding categorical data into algorithms."
+
+---
+
+Step 5: Per-Species Statistical Details using describe()
+---------------------------------------------------------
+"For each species separately, we use describe() to get:
+  - count, mean, std
+  - min, 25%, 50%, 75%, max (percentiles)
+
+This gives a detailed statistical view for each individual species:
+  - Iris-setosa
+  - Iris-versicolor
+  - Iris-virginica"
+
+---
+
+Step 6: Boxplot Visualization
+-------------------------------
+"We draw boxplots for each numeric feature, grouped by species.
+A boxplot shows:
+  - Median (line inside the box)
+  - IQR    (the box itself)
+  - Whiskers (range)
+  - Outliers (dots outside the whiskers)
+
+Boxplots are a great way to visually compare central tendency and variability across groups."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept                    | What it does                            |
+|----------------------------|-----------------------------------------|
+| mean()                     | Average value                           |
+| median()                   | Middle value                            |
+| std()                      | Standard deviation                      |
+| min() / max()              | Smallest and largest values             |
+| groupby()                  | Group data by a categorical column      |
+| describe()                 | Summary stats including percentiles     |
+| Boxplot                    | Visualize distribution per group        |
+| LabelEncoder / mapping     | Convert categories to numbers           |
+
+---
+
+Conclusion
+----------
+"This experiment demonstrates how to compute and compare statistical measures across different groups.
+Grouping by a categorical variable (species) lets us see patterns within each class —
+a fundamental technique in Exploratory Data Analysis (EDA)."

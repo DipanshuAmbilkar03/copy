@@ -1,0 +1,114 @@
+Lab 6 - Naive Bayes Classifier (Iris Dataset)
+==============================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we implement the Naive Bayes Classifier using the Iris dataset.
+
+Naive Bayes is a probabilistic classifier based on Bayes' Theorem.
+It is called 'Naive' because it assumes all features are independent of each other —
+which is rarely true in practice, but the model still performs surprisingly well."
+
+---
+
+Bayes' Theorem (Core Concept)
+-------------------------------
+"Bayes' Theorem:
+
+    P(Class | Features) = P(Features | Class) x P(Class) / P(Features)
+
+  - P(Class | Features) -> Posterior:  probability of a class given the features
+  - P(Features | Class) -> Likelihood: how likely are these features in this class?
+  - P(Class)            -> Prior:      how often does this class appear in the dataset?
+
+We pick the class with the highest posterior probability."
+
+---
+
+Step 1: Load the Dataset
+--------------------------
+"We load the Iris dataset.
+  - Features: SepalLength, SepalWidth, PetalLength, PetalWidth
+  - Target:   Species (Iris-setosa, Iris-versicolor, Iris-virginica)"
+
+---
+
+Step 2: Split the Data
+------------------------
+"We split 80/20 into training and test sets using:
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)"
+
+---
+
+Step 3: Train the Model
+-------------------------
+"We use Gaussian Naive Bayes because our features are continuous (numeric):
+
+    from sklearn.naive_bayes import GaussianNB
+    model = GaussianNB()
+    model.fit(X_train, y_train)
+
+Gaussian NB assumes features follow a normal (Gaussian) distribution within each class."
+
+---
+
+Step 4: Make Predictions
+--------------------------
+"We predict classes for the test set:
+
+    y_pred = model.predict(X_test)"
+
+---
+
+Step 5: Evaluate the Model
+----------------------------
+"We compute:
+  - Accuracy Score        — overall correct predictions
+  - Confusion Matrix      — breakdown of correct/incorrect per class
+  - Classification Report — Precision, Recall, F1 per class
+
+Since Iris has 3 classes, the confusion matrix is 3x3."
+
+---
+
+Step 6: Per-Class Metrics
+---------------------------
+"The classification report shows metrics for each class:
+  - Iris-setosa:     often 100% accurate (very distinct)
+  - Iris-versicolor: may overlap slightly with virginica
+  - Iris-virginica:  may overlap slightly with versicolor"
+
+---
+
+Gaussian NB vs. Other NB Variants
+------------------------------------
+| Variant       | When to Use                   |
+|---------------|-------------------------------|
+| GaussianNB    | Continuous / numeric features |
+| MultinomialNB | Text / count data             |
+| BernoulliNB   | Binary features (0/1)         |
+
+---
+
+Key Concepts Used
+-----------------
+| Concept               | What it does                         |
+|-----------------------|--------------------------------------|
+| Bayes' Theorem        | Core probability rule                |
+| Gaussian NB           | NB for continuous features           |
+| Prior probability     | P(Class) from training data          |
+| Likelihood            | P(Features given Class)              |
+| Posterior             | Final class probability              |
+| Confusion Matrix      | Visual performance breakdown         |
+| Classification Report | Precision, Recall, F1                |
+
+---
+
+Conclusion
+----------
+"This experiment demonstrated the Naive Bayes classifier, a fast and interpretable probabilistic model.
+Despite its 'naive' assumption of feature independence, it achieves high accuracy on the Iris dataset —
+making it a great baseline classifier for multiclass problems."

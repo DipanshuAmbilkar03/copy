@@ -1,0 +1,108 @@
+Lab 5 - Logistic Regression (Classification)
+=============================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we implement Logistic Regression for binary classification.
+
+Unlike Linear Regression which predicts a number, Logistic Regression predicts a class (0 or 1).
+It uses the sigmoid function to output a probability between 0 and 1.
+
+We use the Iris dataset (or a binary dataset) to classify whether a flower belongs to a particular species."
+
+---
+
+Step 1: Load and Prepare the Dataset
+--------------------------------------
+"We load the dataset, select features (e.g., SepalLength, PetalLength), and create a binary target:
+  - 1 -> Iris-setosa
+  - 0 -> everything else
+
+Or if using the full 3-class problem, sklearn handles it with
+One-vs-Rest (OvR) strategy automatically."
+
+---
+
+Step 2: Split the Data
+------------------------
+"We split into training and test sets:
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+  - 80% used for training
+  - 20% used for testing"
+
+---
+
+Step 3: Train Logistic Regression
+-----------------------------------
+"We train the model:
+
+    model = LogisticRegression(max_iter=200)
+    model.fit(X_train, y_train)
+
+max_iter tells the solver how many optimization steps to take to converge."
+
+---
+
+Step 4: Make Predictions
+--------------------------
+"We predict the class for test data:
+
+    y_pred = model.predict(X_test)"
+
+---
+
+Step 5: Evaluate the Model
+----------------------------
+
+Confusion Matrix
+"The Confusion Matrix shows:
+  - True Positives  (TP) — correctly predicted positives
+  - True Negatives  (TN) — correctly predicted negatives
+  - False Positives (FP) — predicted positive, but actually negative
+  - False Negatives (FN) — predicted negative, but actually positive
+
+    confusion_matrix(y_test, y_pred)"
+
+Accuracy, Precision, Recall, F1-Score
+"These are the 4 key classification metrics:
+  - Accuracy   = (TP + TN) / Total
+  - Precision  = TP / (TP + FP)  — how many predicted positives are correct
+  - Recall     = TP / (TP + FN)  — how many actual positives we found
+  - F1-Score   = harmonic mean of Precision and Recall
+
+    classification_report(y_test, y_pred)"
+
+---
+
+Step 6: Plot Confusion Matrix
+-------------------------------
+"We visualize the confusion matrix using seaborn.heatmap() or matplotlib.
+This gives a clear visual of model performance —
+diagonal values should be large (correct predictions)."
+
+---
+
+Key Concepts Used
+-----------------
+| Concept             | What it does                                |
+|---------------------|---------------------------------------------|
+| Logistic Regression | Classify into categories                    |
+| Sigmoid function    | Converts output to probability              |
+| train_test_split    | Divide data for training and testing        |
+| Confusion Matrix    | Shows correct and incorrect predictions     |
+| Accuracy            | Overall correct predictions                 |
+| Precision           | Correctness of positive predictions         |
+| Recall              | Coverage of actual positives                |
+| F1-Score            | Balance between Precision and Recall        |
+
+---
+
+Conclusion
+----------
+"This experiment introduced supervised classification using Logistic Regression.
+We learned how to evaluate a classifier using metrics beyond just accuracy —
+because accuracy alone can be misleading when classes are imbalanced."

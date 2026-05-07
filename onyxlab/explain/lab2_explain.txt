@@ -1,0 +1,117 @@
+Lab 2 - Data Wrangling using CGPA Dataset
+==========================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we performed data wrangling on a CGPA dataset.
+The dataset contains student records with:
+  - Student Name, PRN, Roll No.
+  - CGPA for each semester (Sem1 to Sem5)
+  - Average CGPA
+
+Data wrangling means cleaning, transforming, and preparing raw data so it's ready for analysis."
+
+---
+
+Step 1: Load the Dataset
+--------------------------
+"We load the cgpa.csv file using pandas.
+We use df.head() to preview the first 5 rows and understand the structure of the dataset."
+
+---
+
+Step 2: Handle Missing Values
+-------------------------------
+"We use df.isnull().sum() to check for any missing values.
+If there are missing values, we use:
+
+    df.fillna(df.mean(numeric_only=True), inplace=True)
+
+This fills missing values with the column's mean — a common imputation technique."
+
+---
+
+Step 3: Remove Duplicates
+---------------------------
+"We check for duplicate rows using:
+
+    df.duplicated().sum()
+
+And remove them using:
+
+    df.drop_duplicates(inplace=True)
+
+Duplicates can skew our analysis, so removing them is important."
+
+---
+
+Step 4: Visualize with Boxplot (Outlier Detection)
+----------------------------------------------------
+"We draw a boxplot using matplotlib to visualize the spread of CGPA values.
+A boxplot shows:
+  - The median (middle line)
+  - Interquartile Range (IQR) — the box
+  - Outliers — dots beyond the whiskers"
+
+---
+
+Step 5: Detect and Remove Outliers using IQR
+---------------------------------------------
+"We calculate the IQR (Interquartile Range) to detect outliers:
+
+    Q1  = df.quantile(0.25)
+    Q3  = df.quantile(0.75)
+    IQR = Q3 - Q1
+
+Any value below Q1 - 1.5 * IQR or above Q3 + 1.5 * IQR is an outlier.
+
+We use clip() to cap the outlier values instead of deleting rows:
+
+    df.clip(lower, upper, axis=1)"
+
+---
+
+Step 6: Normalize Data using Min-Max Scaling
+----------------------------------------------
+"We use MinMaxScaler from sklearn to normalize the CGPA values to a range of [0, 1].
+
+    scaler = MinMaxScaler()
+    df[cols] = scaler.fit_transform(df[cols])
+
+Normalization is important so that all features are on the same scale."
+
+---
+
+Step 7: Check Skewness
+------------------------
+"We compute the skewness of numeric columns:
+
+    df.skew()
+
+  - Positive skew  -> data is right-skewed (tail on the right)
+  - Negative skew  -> data is left-skewed  (tail on the left)
+  - Skewness near 0 -> roughly symmetric distribution"
+
+---
+
+Key Concepts Used
+-----------------
+| Concept                              | What it does                       |
+|--------------------------------------|------------------------------------|
+| isnull() + fillna()                  | Detect and fill missing values     |
+| duplicated() + drop_duplicates()     | Remove duplicate rows              |
+| Boxplot                              | Visualize distribution and outliers|
+| IQR method                           | Detect outliers mathematically     |
+| clip()                               | Cap outlier values                 |
+| MinMaxScaler                         | Normalize data to [0, 1] range     |
+| skew()                               | Measure asymmetry in distribution  |
+
+---
+
+Conclusion
+----------
+"This experiment taught us data wrangling — the process of identifying and fixing issues in raw data
+such as missing values, duplicates, outliers, and scale differences.
+Clean data leads to better machine learning models."

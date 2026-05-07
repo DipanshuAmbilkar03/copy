@@ -1,0 +1,136 @@
+Lab 11 - Big Data Processing using Apache Impala (SQL Queries on Employee Data)
+=================================================================================
+What to Say (Teacher's Script)
+================================
+
+Introduction
+------------
+"In this experiment, we work with Apache Impala — a massively parallel
+SQL engine built for big data analytics on Hadoop clusters.
+
+We create an employee database, insert data, and run various SQL queries
+to extract insights."
+
+---
+
+What is Apache Impala?
+-----------------------
+"Apache Impala is a high-performance, distributed SQL engine that runs
+on top of Hadoop and HDFS (Hadoop Distributed File System).
+
+It allows you to run SQL queries on large-scale data in near real-time
+without needing to write MapReduce jobs.
+
+Impala is commonly used with:
+  - Hadoop / HDFS
+  - Apache Hive Metastore
+  - Big Data analytics platforms"
+
+---
+
+Step 1: Creating the Database and Table
+-----------------------------------------
+"We create a new database and define an employees table:
+
+    CREATE DATABASE company_db;
+    USE company_db;
+
+    CREATE TABLE employees (
+      emp_id     INT,
+      name       STRING,
+      department STRING,
+      salary     INT,
+      city       STRING
+    );
+
+Note: In Impala, STRING is used instead of VARCHAR for text fields."
+
+---
+
+Step 2: Inserting Employee Data
+---------------------------------
+"We insert 7 employee records into the table:
+
+    INSERT INTO employees VALUES
+    (101, 'Dipanshu',  'Engineering',  120000, 'Mumbai'),
+    (102, 'Keshav',    'HR',            90000, 'Delhi'),
+    (103, 'Harsh',     'Finance',      110000, 'Pune'),
+    (104, 'Naman',     'Engineering',  150000, 'Bangalore'),
+    (105, 'Kinjal',    'Management',   200000, 'Ahmedabad'),
+    (106, 'Shreya',    'HR',            95000, 'Kolkata'),
+    (107, 'Ayush',     'Engineering',  130000, 'Hyderabad');"
+
+---
+
+Step 3: SQL Queries and Their Purpose
+---------------------------------------
+"We perform the following queries to extract insights:
+
+1. View all employees:
+       SELECT * FROM employees;
+
+2. Find the highest salary:
+       SELECT MAX(salary) AS highest_salary FROM employees;
+
+3. Find the lowest salary:
+       SELECT MIN(salary) AS lowest_salary FROM employees;
+
+4. Filter employees from Mumbai:
+       SELECT * FROM employees WHERE city = 'Mumbai';
+
+5. Count employees per department:
+       SELECT department, COUNT(*) AS total_employees
+       FROM employees GROUP BY department;
+
+6. Average salary per department:
+       SELECT department, AVG(salary) AS avg_salary
+       FROM employees GROUP BY department;
+
+7. Employees with salary between 1 lakh and 1.5 lakhs:
+       SELECT * FROM employees WHERE salary BETWEEN 100000 AND 150000;
+
+8. Sort employees by name (A-Z):
+       SELECT * FROM employees ORDER BY name ASC;
+
+9. Top 3 highest-paid employees:
+       SELECT * FROM employees ORDER BY salary DESC LIMIT 3;
+
+10. Employees not in Engineering:
+        SELECT * FROM employees WHERE department != 'Engineering';
+
+11. Total salary bill:
+        SELECT SUM(salary) AS total_salary FROM employees;"
+
+---
+
+Key Concepts Used
+-----------------
+| Concept         | What it does                                         |
+|-----------------|------------------------------------------------------|
+| CREATE DATABASE | Creates a new schema/database                       |
+| CREATE TABLE    | Defines a new table with columns and data types     |
+| INSERT INTO     | Inserts rows of data into the table                 |
+| SELECT          | Retrieves data from the table                       |
+| WHERE           | Filters rows based on a condition                   |
+| GROUP BY        | Groups rows for aggregation                         |
+| ORDER BY        | Sorts the result set                                |
+| LIMIT           | Restricts the number of rows returned               |
+| MAX / MIN       | Finds the maximum or minimum value in a column      |
+| AVG / SUM       | Computes average or total of a numeric column       |
+| COUNT(*)        | Counts the number of rows in each group             |
+
+---
+
+Conclusion
+----------
+"This experiment demonstrated how Apache Impala enables fast SQL-based
+analytics on Big Data platforms.
+
+With Impala, we can run the same SQL queries we use in relational databases
+(like MySQL or PostgreSQL) but on massive datasets stored in Hadoop HDFS.
+
+Key advantages of Impala:
+  - Real-time querying (no wait for MapReduce jobs)
+  - Familiar SQL syntax
+  - Compatible with Hive Metastore
+  - Highly scalable for Big Data workloads"
